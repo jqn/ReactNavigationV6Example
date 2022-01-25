@@ -6,6 +6,8 @@ import {Button} from '../components/Button';
 
 import colors from '../constants/colors';
 
+import {withStore} from '../context/AppContext';
+
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.white,
@@ -13,20 +15,19 @@ const styles = StyleSheet.create({
   },
 });
 
-const SignIn = () => {
+const SignIn = ({navigation, store, syncStore}) => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [errors, setErrors] = React.useState({});
 
-  const submit = async () => {
+  const submit = () => {
     setErrors({});
     try {
+      if (email && password) {
+        syncStore({...store, loggedIn: true, permissions: {settings: true}});
+      }
     } catch (error) {
-      const nextErrors = {};
-      error.inner.forEach(e => {
-        nextErrors[e.path] = e.message;
-      });
-      setErrors(nextErrors);
+      setErrors();
     }
   };
 
@@ -51,4 +52,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default withStore(SignIn);

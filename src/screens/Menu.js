@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, View, ImageBackground} from 'react-native';
 import {Button} from 'react-native-elements';
+import {withStore} from '../context/AppContext';
 
 const styles = StyleSheet.create({
   imageBackground: {
@@ -32,29 +33,22 @@ const styles = StyleSheet.create({
   },
 });
 
-const Home = ({navigation}) => {
+const Menu = ({navigation, store}) => {
   return (
     <View style={styles.container}>
       <ImageBackground
         source={require('../../assets/background.png')}
         style={styles.imageBackground}>
         <Button
-          title="Sign In"
+          title="Dashboard"
           buttonStyle={styles.button}
           containerStyle={styles.buttonContainer}
           titleStyle={styles.buttonTitle}
-          onPress={() => navigation.navigate('SignIn')}
-        />
-        <Button
-          title="Sign Up"
-          buttonStyle={styles.lightButton}
-          containerStyle={styles.buttonContainer}
-          titleStyle={styles.lightButtonTitle}
-          onPress={() => navigation.navigate('SignUp')}
+          onPress={() => navigation.navigate('Apptabs')}
         />
       </ImageBackground>
     </View>
   );
 };
 
-export default Home;
+export default withStore(Menu);
